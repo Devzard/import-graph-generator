@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite App</title>
+    </head>
+    <body>
+        <div id="app" class="h-screen w-full flex">
+            <div id="controlsContainer" class="absolute rounded-sm w-80 flex flex-col bg-white z-10 p-2 m-2 left-0 space-y-2">
+                <div class="flex justify-between rounded-md w-full">
+                    <button id="toggleButton" class="text-black flex items-center justify-between rounded-md w-full px-2 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        <span>Controls</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" id="dropdownIcon"><path d="m14 20 10 10 10-10z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
+                    </button>
+                </div>
+                <div id="controlMenu" class="flex flex-col space-y-2">
+                    <div>
+                        <label for="folderPath" class="block mb-2 text-sm font-medium text-gray-900">Folder path</label>
+                        <div class="flex space-x-2">
+                            <input id="folderPath" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" placeholder="Type here..." value="./test-repo" />
+                            <button id="submitButton" class="bg-blue-600 hover:bg-blue-700 text-white rounded-md p-2 focus:ring-4 focus:outline-none focus:ring-blue-300">Draw</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="removePrefix" class="block mb-2 text-sm font-medium text-gray-900">Remove prefix text</label>
+                        <input id="removePrefix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" placeholder="Type here..." value="" />
+                    </div>
+
+                    <div class="flex space-x-2 align-middle items-center pl-2">
+                        <input id="includeInstalledPackages" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" type="checkbox" placeholder="Type here..." value="true" /> 
+                        <label for="includeInstalledPackages" class="block text-sm font-medium text-gray-900">Include installed package imports</label>
+                    </div>
+
+                    <div class="flex space-x-2 align-middle items-center pl-2">
+                        <input id="isolateNode" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" type="checkbox" placeholder="Type here..." value="true" /> 
+                        <label for="isolateNode" class="block text-sm font-medium text-gray-900">Isolate connected nodes on double click</label>
+                    </div>
+
+                </div>
+            </div>
+            <div id="graphContainer" class="h-full w-full bg-blue-50"></div>
+        </div>
+        <script type="module" src="/main.js"></script>
+    </body>
+</html>
