@@ -18,6 +18,13 @@ An application that parses your code to create an interactive graph of all file 
     ```
 4. Visit [localhost:8000/index.html](http://localhost:8000/index.html)
 
+### Preview Images
+![python-import-graph-1](assests/1.png)
+
+![python-import-graph-2](assests/2.png)
+
+![python-import-graph-3](assests/3.png)
+
 ## Contributing
 ## Setup environment
 ### Backend
