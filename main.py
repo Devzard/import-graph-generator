@@ -4,6 +4,7 @@ from typing_extensions import List
 
 import uvicorn
 from fastapi import FastAPI, Response
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -46,7 +47,7 @@ app = get_app()
 def read_root():
     return {"message": "pong"}
 
-@app.post("/graph-python", response_model=GraphResponse)
+@app.post("/v1/graph-python", response_model=GraphResponse)
 def get_graph(response: Response, data: GraphRequest):
     try:
         logger.info(f"Generating graph for {data.folder_path}")
@@ -68,6 +69,8 @@ def get_graph(response: Response, data: GraphRequest):
         res = GraphErrorResponse("Internal Server Error")
         return res
 
+
+app.mount("/", StaticFiles(directory="graph-renderer-js/dist"), name="static")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

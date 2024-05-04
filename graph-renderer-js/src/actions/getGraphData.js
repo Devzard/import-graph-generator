@@ -1,5 +1,5 @@
 export async function pythonFolderGraph(folder_path) {
-    return await fetch("http://localhost:8000/graph-python", {
+    return await fetch("http://localhost:8000/v1/graph-python", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

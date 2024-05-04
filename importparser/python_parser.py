@@ -6,6 +6,8 @@ class PythonParser(Parser):
     def __init__(self, path: str, ignore_folders: list[str] = [], ignore_files: list[str] = []) -> None:
         super().__init__(path, ignore_folders, ignore_files)
         self.ext = '.py'
+        self.all_files = []
+        self.all_dirs = []
 
     def get_all_file_paths(self) -> tuple[list[str], list[str]]:
         """
@@ -17,19 +19,20 @@ class PythonParser(Parser):
         Returns:
             - tuple of (file paths to all files, all directories inside the path)
         """
-        all_files = []
-        all_dirs = []
         for root, dir, files in os.walk(self.path):
             if os.path.basename(root) not in self.ignore_folders:
                 dir = [item for item in dir if item not in self.ignore_folders]
                 dirPaths = [os.path.join(root, item) for item in dir]
-                all_dirs.extend(dirPaths)
+                self.all_dirs.extend(dirPaths)
 
                 files = [item for item in files if item not in self.ignore_files]
+                for file in files:
+                    if file in self.all_dirs:
+                        print(file)
                 filePaths = [os.path.join(root, item) for item in files]
-                all_files.extend(filePaths)
+                self.all_files.extend(filePaths)
 
-        return all_files, all_dirs
+        return self.all_files, self.all_dirs
 
     def filter_files(self, paths: list[str], ext: str) -> list[str]:
         """
@@ -88,6 +91,20 @@ class PythonParser(Parser):
             module_name = import_statement.split()[1]
             module_name = module_name.strip()
             module_name = module_name.split(".")
+
+            second_part = import_statement.split()[3]
+            second_part = second_part.split(",")
+
+            if module_name[-1] in [item.split("/")[-1] for item in self.all_dirs]:
+                for item in module_name:
+                    file_path = os.path.join(file_path, item)
+
+                temp_files = []
+                for file in second_part:
+                    temp_files.append(os.path.join(file_path, file))
+
+                return [item + '.py' for item in temp_files]
+
             for item in module_name:
                 file_path = os.path.join(file_path, item)
 
@@ -111,7 +128,11 @@ class PythonParser(Parser):
             imports_paths = []
 
             for import_statement in imports:
-                imports_paths.append(self.import_to_file_path(import_statement))
+                import_file = self.import_to_file_path(import_statement)
+                if isinstance(import_file, str):
+                    imports_paths.append(self.import_to_file_path(import_statement))
+                elif isinstance(import_file, list):
+                    imports_paths.extend(self.import_to_file_path(import_statement))
 
             imports_map[file] = imports_paths
 

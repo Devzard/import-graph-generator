@@ -1,19 +1,23 @@
-import { Network  } from "vis-network";
+import { Network } from "vis-network";
 
 import { jsonToDataset } from "./jsonToDataset";
 import { GraphOptions } from "./graph.config";
 import { createSignal } from "./signal";
 import { pythonFolderGraph } from "./actions/getGraphData";
 
-async function drawGraph(data, removePrefix='', includeInstalledPackages=true, deleteOnDoubleClick=false) {
+
+async function drawGraph(data, removePrefix = '', includeInstalledPackages = true, deleteOnDoubleClick = false, gaps = {x: 100, y: 100}) {
   if (!data) return;
-
-  data = data.graph
-
-  let container = document.getElementById("graphContainer");
-  let graphData = jsonToDataset(data, removePrefix, includeInstalledPackages);
-  let network = new Network(container, graphData, GraphOptions);
   
+  data = data.graph
+  
+  let graphData = jsonToDataset(data, removePrefix, includeInstalledPackages, gaps.x, gaps.y);
+  let container = document.getElementById("graphContainer");
+  let undoButton = document.getElementById("undoButton");
+  let network = new Network(container, graphData, GraphOptions);
+
+  let deletedNodes = []
+
   network.on("doubleClick", (params) => {
     let connectedNotes = network.getConnectedNodes(params.nodes[0])
     connectedNotes.push(params.nodes[0])
@@ -25,12 +29,37 @@ async function drawGraph(data, removePrefix='', includeInstalledPackages=true, d
 
     if (deleteOnDoubleClick) {
       network.selectNodes(unselectedNodes)
-      network.deleteSelected()
+      deletedNodes.push(graphData.nodes.get(unselectedNodes))
+      graphData.nodes.remove(unselectedNodes)
     } else {
       network.selectNodes(connectedNotes)
     }
+
+    if (deletedNodes.length > 0) undoButton.disabled = false
+    else undoButton.disabled = true
+
   })
-  
+
+  undoButton.addEventListener("click", () => {
+    graphData.nodes.add(deletedNodes[deletedNodes.length - 1])
+    deletedNodes.pop()
+    if (deletedNodes.length > 0) undoButton.disabled = false
+    else undoButton.disabled = true
+  })
+
+  network.on("dragEnd", (params) => {
+    let nodes = params.nodes
+    nodes.forEach((node) => {
+      let newNodePos = network.getPosition(node)
+      let graphNode = graphData.nodes.get(node)
+      graphNode.x = newNodePos.x
+      graphNode.y = newNodePos.y
+      console.log(node, newNodePos)
+    })
+
+    console.log(graphData.nodes)
+  })
+
   return network;
 }
 
@@ -51,7 +80,7 @@ function controlMenu(graphData, removePrefix, includeInstalledPackages, isolateN
     let newGraphData = await pythonFolderGraph(folderPath.value);
     graphData.value = newGraphData;
   })
-  
+
   let newRemovePrefix = document.getElementById("removePrefix");
   newRemovePrefix.addEventListener("input", () => {
     removePrefix.value = newRemovePrefix.value;
@@ -76,7 +105,7 @@ export default async function App() {
   const network = createSignal();
 
   graphData.subscribe((data) => {
-    network.value = drawGraph(data, removePrefix.value, includeInstalledPackages.value, isolateNode.value) 
+    network.value = drawGraph(data, removePrefix.value, includeInstalledPackages.value, isolateNode.value)
   })
 
   removePrefix.subscribe((prefix) => {
