@@ -17,30 +17,44 @@
                 </div>
                 <div id="controlMenu" class="flex flex-col space-y-2">
                     <div>
-                        <label for="folderPath" class="block mb-2 text-sm font-medium text-gray-900">Folder path</label>
+                        <label for="folderPath" class="block mb-2 text-xs font-medium text-gray-500">Folder path</label>
                         <div class="flex space-x-2">
-                            <input id="folderPath" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" placeholder="Type here..." value="./test-repo" />
-                            <button id="submitButton" class="bg-blue-600 hover:bg-blue-700 text-white rounded-md p-2 focus:ring-4 focus:outline-none focus:ring-blue-300">Draw</button>
+                            <input id="folderPath" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2.5" type="text" placeholder="Type here..." value="./test-repo" />
+                            <button id="submitButton" class="bg-blue-600 hover:bg-blue-700 text-white rounded-md py-1 px-2 focus:ring-4 focus:outline-none focus:ring-blue-300">Draw</button>
                         </div>
                     </div>
 
+                    <details>
+                        <summary class="text-xs font-medium text-gray-500">Advanced</summary>
+                        <div>
+                            <label for="ignoreFiles" class="block mb-2 text-xs font-medium text-gray-500">Ignore Files (separate values with ',')</label>
+                            <input id="ignoreFiles" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2.5" type="text" placeholder="Type here..." value="__init__.py" />
+                        </div>
+    
+                        <div>
+                            <label for="ignoreFolders" class="block mb-2 text-xs font-medium text-gray-500">Ignore Folders (separate values with ',')</label>
+                            <input id="ignoreFolders" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2.5" type="text" placeholder="Type here..." value="__pycache__" />
+                        </div>
+                    </details>
+
+
                     <div>
-                        <label for="removePrefix" class="block mb-2 text-sm font-medium text-gray-900">Remove prefix text</label>
-                        <input id="removePrefix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" placeholder="Type here..." value="" />
+                        <label for="removePrefix" class="block mb-2 text-xs font-medium text-gray-500">Remove prefix text</label>
+                        <input id="removePrefix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-1 px-2.5" type="text" placeholder="Type here..." value="" />
                     </div>
 
                     <div class="flex space-x-2 align-middle items-center pl-2">
                         <input id="includeInstalledPackages" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" type="checkbox" placeholder="Type here..." value="true" /> 
-                        <label for="includeInstalledPackages" class="block text-sm font-medium text-gray-900">Include installed package imports</label>
+                        <label for="includeInstalledPackages" class="block text-sm font-medium text-gray-700">Include installed package imports</label>
                     </div>
 
                     <div class="flex space-x-2 align-middle items-center pl-2">
                         <input id="isolateNode" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" type="checkbox" placeholder="Type here..." value="true" /> 
-                        <label for="isolateNode" class="block text-sm font-medium text-gray-900">Isolate connected nodes on double click</label>
+                        <label for="isolateNode" class="block text-sm font-medium text-gray-700">Isolate connected nodes on double click</label>
                     </div>
 
                     <div>
-                        <button id="undoButton" class="bg-blue-600 w-full hover:bg-blue-700 text-white rounded-md p-2 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:bg-slate-200" disabled="true">Undo</button>
+                        <button id="undoButton" class="bg-blue-600 w-full hover:bg-blue-700 text-white rounded-md py-1 px-2 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:bg-slate-200" disabled="true">Undo</button>
                     </div>
 
                 </div>

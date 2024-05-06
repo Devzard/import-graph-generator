@@ -16,13 +16,20 @@ export const GraphOptions = {
       face: "arial",
       // color: "#EFF6FF",
     },
-    color: "#EFF6FF",
+    color: "#f7faff",
   },
   layout: {
     randomSeed: 989104,
     hierarchical: {
-      enabled: false,
-      direction: "LR", // UD, DU, LR, RL
+      enabled: true,
+      direction: "UD", // UD, DU, LR, RL,
+      levelSeparation: 200,
+      nodeSpacing: 300,
+      treeSpacing: 200,
+      blockShifting: true,
+      edgeMinimization: true,
+      parentCentralization: false,
+      sortMethod: "directed", // hubsize, directed
     },
     improvedLayout: true,
   },
@@ -41,6 +48,11 @@ export const GraphOptions = {
     },
     hoverWidth: 0.8,
     color: "rgba(0,0,0,0.5)",
+    smooth: {
+      enabled: true,
+      type: "cubicBezier",
+      roundness: 0.5,
+    }
   },
   physics: {
     enabled: false,
@@ -51,7 +63,7 @@ export const GraphOptions = {
       springLength: 95,
       springConstant: 0.04,
       damping: 0.09,
-      avoidOverlap: 0,
+      avoidOverlap: 1,
     },
     forceAtlas2Based: {
       theta: 0.5,
@@ -73,7 +85,7 @@ export const GraphOptions = {
       centralGravity: 0.0,
       springLength: 100,
       springConstant: 0.01,
-      nodeDistance: 120,
+      nodeDistance: 140,
       damping: 0.09,
       avoidOverlap: 0,
     },

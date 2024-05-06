@@ -6,11 +6,11 @@ import { createSignal } from "./signal";
 import { pythonFolderGraph } from "./actions/getGraphData";
 
 
-async function drawGraph(data, removePrefix = '', includeInstalledPackages = true, deleteOnDoubleClick = false, gaps = {x: 100, y: 100}) {
+async function drawGraph(data, removePrefix = '', includeInstalledPackages = true, deleteOnDoubleClick = false, gaps = { x: 100, y: 100 }) {
   if (!data) return;
-  
+
   data = data.graph
-  
+
   let graphData = jsonToDataset(data, removePrefix, includeInstalledPackages, gaps.x, gaps.y);
   let container = document.getElementById("graphContainer");
   let undoButton = document.getElementById("undoButton");
@@ -54,16 +54,13 @@ async function drawGraph(data, removePrefix = '', includeInstalledPackages = tru
       let graphNode = graphData.nodes.get(node)
       graphNode.x = newNodePos.x
       graphNode.y = newNodePos.y
-      console.log(node, newNodePos)
     })
-
-    console.log(graphData.nodes)
   })
 
   return network;
 }
 
-function controlMenu(graphData, removePrefix, includeInstalledPackages, isolateNode) {
+function controlMenu(graphData, removePrefix, includeInstalledPackages, isolateNode, ignoreFiles, ignoreFolders) {
   let toggleButton = document.getElementById("toggleButton");
   toggleButton.addEventListener("click", () => {
     let controlMenu = document.getElementById("controlMenu");
@@ -77,14 +74,28 @@ function controlMenu(graphData, removePrefix, includeInstalledPackages, isolateN
   let folderPath = document.getElementById("folderPath");
   let submitButton = document.getElementById("submitButton");
   submitButton.addEventListener("click", async () => {
-    let newGraphData = await pythonFolderGraph(folderPath.value);
+    let newGraphData = await pythonFolderGraph(folderPath.value, ignoreFiles.value, ignoreFolders.value);
     graphData.value = newGraphData;
   })
+
 
   let newRemovePrefix = document.getElementById("removePrefix");
   newRemovePrefix.addEventListener("input", () => {
     removePrefix.value = newRemovePrefix.value;
   })
+
+  let newIgnoreFiles = document.getElementById("ignoreFiles");
+  newIgnoreFiles.addEventListener("input", () => {
+    ignoreFiles.value = newIgnoreFiles.value.split(",").map((file) => file.trim());
+    console.log(ignoreFiles.value)
+  })
+
+  let newIgnoreFolders = document.getElementById("ignoreFolders");
+  newIgnoreFolders.addEventListener("input", () => {
+    ignoreFolders.value = newIgnoreFolders.value.split(",").map((folder) => folder.trim());
+    console.log(ignoreFolders.value)
+  })
+
 
   let newIncludeInstalledPackages = document.getElementById("includeInstalledPackages");
   newIncludeInstalledPackages.addEventListener("change", () => {
@@ -102,6 +113,8 @@ export default async function App() {
   const removePrefix = createSignal("");
   const includeInstalledPackages = createSignal(false);
   const isolateNode = createSignal();
+  const ignoreFiles = createSignal(['__init__.py']);
+  const ignoreFolders = createSignal(['__pycache__']);
   const network = createSignal();
 
   graphData.subscribe((data) => {
@@ -120,5 +133,5 @@ export default async function App() {
     network.value = drawGraph(graphData.value, removePrefix.value, includeInstalledPackages.value, isolate)
   })
 
-  controlMenu(graphData, removePrefix, includeInstalledPackages, isolateNode)
+  controlMenu(graphData, removePrefix, includeInstalledPackages, isolateNode, ignoreFiles, ignoreFolders)
 }

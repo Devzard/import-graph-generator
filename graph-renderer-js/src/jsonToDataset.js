@@ -50,8 +50,8 @@ function getAllUniqueNodes(data) {
  */
 export function jsonToDataset(data, removePrefix = null, includeInstalledPackages=true, verticalGap=100, horizontalGap=100) {
   let unique_nodes = getAllUniqueNodes(data);
-  let layout = createLayout(data)
-  let offset = {x: 0, y: 0}
+  // let layout = createLayout(data)
+  // let offset = {x: 0, y: 0}
   let keys = new Set(Object.keys(data));
   let lookup_nodes = new Map();
   let nodes = [];
@@ -65,7 +65,9 @@ export function jsonToDataset(data, removePrefix = null, includeInstalledPackage
 
     if (!includeInstalledPackages && !keys.has(item)) return;
     
-    nodes.push({ id: idx, label: label, shape: "box", x: offset.x + layout[item].level * verticalGap, y: offset.y + layout[item].count * horizontalGap});
+    // nodes.push({ id: idx, label: label, shape: "box", x: offset.x + layout[item].level * verticalGap, y: offset.y + layout[item].count * horizontalGap});
+    nodes.push({ id: idx, label: label, shape: "box"});
+
     lookup_nodes.set(item, idx);
     idx += 1;
   });
