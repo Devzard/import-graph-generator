@@ -21,7 +21,7 @@ export const GraphOptions = {
   layout: {
     randomSeed: 989104,
     hierarchical: {
-      enabled: true,
+      enabled: false,
       direction: "UD", // UD, DU, LR, RL,
       levelSeparation: 200,
       nodeSpacing: 300,

@@ -2,20 +2,20 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <link rel="icon" type="image/svg+xml" href="/DG-logos.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Vite App</title>
+        <title>Import graph generator</title>
     </head>
     <body>
         <div id="app" class="h-screen w-full flex">
-            <div id="controlsContainer" class="absolute rounded-sm w-80 flex flex-col bg-white z-10 p-2 m-2 left-0 space-y-2">
-                <div class="flex justify-between rounded-md w-full">
+            <div id="controlsContainer" class="absolute rounded-sm w-80 h-full flex flex-col bg-white z-10 p-2 left-0 space-y-2">
+                <div class="flex justify-between rounded-md w-full h-[5%]">
                     <button id="toggleButton" class="text-black flex items-center justify-between rounded-md w-full px-2 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                        <span>Controls</span>
+                        <span class="text-blue-700 font-semibold">Dev Import Graph Generator</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" id="dropdownIcon"><path d="m14 20 10 10 10-10z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
                     </button>
                 </div>
-                <div id="controlMenu" class="flex flex-col space-y-2">
+                <div id="controlMenu" class="flex flex-col space-y-2 h-[95%] py-2">
                     <div>
                         <label for="folderPath" class="block mb-2 text-xs font-medium text-gray-500">Folder path</label>
                         <div class="flex space-x-2">
@@ -55,6 +55,12 @@
 
                     <div>
                         <button id="undoButton" class="bg-blue-600 w-full hover:bg-blue-700 text-white rounded-md py-1 px-2 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:bg-slate-200" disabled="true">Undo</button>
+                    </div>
+
+
+                    <!-- Show all nodes -->
+                    <div id="nodesContainer" class="flex flex-col space-y-1 overflow-y-auto overflow-x-auto">
+                        
                     </div>
 
                 </div>

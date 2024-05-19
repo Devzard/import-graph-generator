@@ -75,16 +75,3 @@ app.mount("/", StaticFiles(directory="graph-renderer-js/dist"), name="static")
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
-
-# if __name__ == "__main__":
-#     # root_dir = "test-repo"
-#     root_dir = "/Users/debashishgogoi/Projects/renix/capital-expert-bot-api"
-#     # root_dir = "/Users/debashishgogoi/Projects/graph-maker/test-repo"
-#     ignore_folders = ["__pycache__"]
-#     ignore_files = ["__init__.py"]
-
-#     python_parser = ImportsGraphMaker(root_dir, ignore_folders, ignore_files)
-#     imports_map = python_parser.generate_graph()
-#     json.dump(imports_map, open(f"outputs/data.json", 'w'))
-#     mermaid_graph = ImportGraph("example import graph", imports_map, output_path="outputs/test-repo.html")
-#     mermaid_graph.generate_html()

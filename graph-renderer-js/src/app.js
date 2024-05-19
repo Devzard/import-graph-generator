@@ -18,9 +18,30 @@ async function drawGraph(data, removePrefix = '', includeInstalledPackages = tru
 
   let deletedNodes = []
 
+  let nodesContiner = document.getElementById("nodesContainer")
+  nodesContiner.replaceChildren()
+  graphData.nodes.forEach(node => {
+
+    let container = document.createElement("div")
+    let buttonNode = document.createElement("button")
+
+    container.className = "flex space-x-2 align-middle items-center pl-2"
+
+    buttonNode.innerText = node.label
+    buttonNode.className = "block text-left text-sm font-medium text-gray-700 rounded-md w-full py-1 px-2 hover:bg-blue-500 hover:text-white focus:bg-blue-300"
+
+    buttonNode.addEventListener("click", (e) => {
+      network.fit({nodes: [node.id], animation: true})
+      network.selectNodes([node.id])
+    })
+    nodesContiner.appendChild(buttonNode)
+  })
+
   network.on("doubleClick", (params) => {
     let connectedNotes = network.getConnectedNodes(params.nodes[0])
     connectedNotes.push(params.nodes[0])
+
+    network.fit({nodes: connectedNotes, animation: true})
 
     let unselectedNodes = []
     graphData.nodes.forEach((node) => {
