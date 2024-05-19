@@ -4,6 +4,16 @@ An application that parses your code to create an interactive graph of all file 
 # Currently supported languages:
 1. 🐍 Python
 
+
+# Demo
+
+
+
+https://github.com/Devzard/import-graph-generator/assets/52529195/4f840008-224a-49a9-8271-3de28b3a897c
+
+
+
+
 ## How to run the app?
 ### 1. Build frontend
 1. cd into graph-renderer-js
